@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin-files');
+});
+
+
+Route::group(['middleware' => ['auth', 'hasPermission:admin_test']], function () {
+    Route::get('/admin-files', function () {
+        return view('admin-files');
+    });
 });
