@@ -45,6 +45,8 @@ class RolePermissionSeeder extends Seeder
         return [
 
             // user = job seekers
+            'admin_test',
+
             'user_view',
             'user_create',
             'user_edit',
@@ -80,6 +82,7 @@ class RolePermissionSeeder extends Seeder
     {
         return [
 
+            'recruiter_test',
 
             'company_view',
             'company_create',
@@ -104,6 +107,7 @@ class RolePermissionSeeder extends Seeder
     {
         return [
 
+            'user_test',
 
             'user_view',
             'user_create',

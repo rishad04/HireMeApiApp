@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Role;
+use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +17,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin-files');
+    return view('welcome');
 });
+
+Route::get('/create-token/{id}', function ($id) {
+    $user = User::findOrFail($id);
+    $token = JWTAuth::fromUser($user);
+
+    return response()->json([
+        'user_id' => $user->id,
+        'token' => $token,
+    ]);
+});
+
 
 
 Route::group(['middleware' => ['auth', 'hasPermission:admin_test']], function () {
