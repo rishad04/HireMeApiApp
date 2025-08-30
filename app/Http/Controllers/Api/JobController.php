@@ -32,4 +32,15 @@ class JobController extends Controller
 
         return response()->json($jobs);
     }
+
+    public function show($id)
+    {
+        $data = Job::with('company')->find($id);
+
+        if (!$data) {
+            return response()->json(null, 404);
+        }
+
+        return response()->json($data);
+    }
 }
