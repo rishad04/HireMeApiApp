@@ -10,6 +10,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "stripe/stripe-php": "^17.6",
         "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
@@ -62,6 +63,7 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
+
 }

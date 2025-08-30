@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use PharIo\Manifest\AuthorCollection;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/jobs', [JobController::class, 'index']);
 Route::get('/jobs/{id}', [JobController::class, 'show']);
+
+Route::middleware('auth:api')->group(function () {
+
+    Route::post('/payment-intend', [PaymentController::class, 'intend']);
+});
+
+// Stripe success/cancel callbacks
+Route::get('stripe/payment/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.payment.success');
+Route::get('stripe/payment/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.payment.cancel');
