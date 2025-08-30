@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\JobCollection;
 
 class JobController extends Controller
 {
@@ -20,6 +22,7 @@ class JobController extends Controller
             // or the related company's name.
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('title', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('type', 'like', '%' . $searchTerm . '%')
                     ->orWhere('location', 'like', '%' . $searchTerm . '%')
                     ->orWhereHas('company', function ($companyQuery) use ($searchTerm) {
                         $companyQuery->where('name', 'like', '%' . $searchTerm . '%');
@@ -30,7 +33,12 @@ class JobController extends Controller
         // Execute the query
         $jobs = $query->latest()->get();
 
-        return response()->json($jobs);
+        // return response()->json($jobs);
+
+        $params = [];
+        $params['user'] = Auth::guard('api')->user();
+
+        return new JobCollection($jobs, $params);
     }
 
     public function show($id)
