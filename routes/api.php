@@ -6,6 +6,7 @@ use PharIo\Manifest\AuthorCollection;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\UserDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,8 @@ Route::get('/jobs/{id}', [JobController::class, 'show']);
 Route::middleware('auth:api')->group(function () {
 
     Route::post('/payment-intend', [PaymentController::class, 'intend']);
+    Route::get('/user-applications', [UserDashboardController::class, 'index']);
+    Route::delete('/user-application/delete/{application}', [UserDashboardController::class, 'destroy']);
 });
 
 // Stripe success/cancel callbacks

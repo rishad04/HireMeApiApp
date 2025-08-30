@@ -14,4 +14,9 @@ class UserApplication extends Model
         'payment_status',
         'status',
     ];
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class, 'job_id');
+    }
 }
