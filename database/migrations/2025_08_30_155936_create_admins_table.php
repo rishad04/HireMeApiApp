@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->string('password')->nullable();
             $table->integer('role_id')->nullable();
+            $table->integer('company_id')->nullable();
             $table->rememberToken()->nullable();
             $table->boolean('is_active')->nullable();
             $table->boolean('is_recruiter')->nullable();

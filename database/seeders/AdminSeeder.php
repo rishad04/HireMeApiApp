@@ -21,6 +21,7 @@ class AdminSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@hireme.com',
                 'role_id' => 1,
+                'is_recruiter' => 0,
                 'password' => '112233',
             ],
             [
@@ -28,6 +29,8 @@ class AdminSeeder extends Seeder
                 'name' => 'Recruiter',
                 'email' => 'recruiter@hireme.com',
                 'role_id' => 2,
+                'company_id' => 1,
+                'is_recruiter' => 1,
                 'password' => '112233',
             ],
 
@@ -36,6 +39,8 @@ class AdminSeeder extends Seeder
                 'name' => 'Recruiter 2',
                 'email' => 'recruiter2@hireme.com',
                 'role_id' => 2,
+                'is_recruiter' => 1,
+                'company_id' => 2,
                 'password' => '112233',
             ],
             [
@@ -43,6 +48,8 @@ class AdminSeeder extends Seeder
                 'name' => 'Recruiter 3',
                 'email' => 'recruiter3@hireme.com',
                 'role_id' => 2,
+                'is_recruiter' => 1,
+                'company_id' => 1,
                 'password' => '112233',
             ],
 
@@ -55,7 +62,9 @@ class AdminSeeder extends Seeder
                 'name' => $admin['name'],
                 'email' => $admin['email'],
                 'role_id' => $admin['role_id'],
+                'company_id' => $admin['company_id'] ?? null,
                 'is_active' => 1,
+                'is_recruiter' => $admin['is_recruiter'],
                 'password' => Hash::make($admin['password']),
             ]);
         }

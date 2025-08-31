@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\RecruiterController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 
 /*
@@ -81,4 +82,17 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::put('admin/company/update/{id}', [CompanyController::class, 'update'])->name('company.update')->middleware('hasAdminPermission:company_edit');
 
     Route::delete('admin/company/delete/{id}',         [CompanyController::class, 'destroy'])->name('company.delete')->middleware('hasAdminPermission:company_delete');
+
+    // recruiter
+    Route::get('admin/recruiter', [RecruiterController::class, 'index'])->name('recruiter.index')->middleware('hasAdminPermission:recruiter_view');
+
+    Route::get('admin/recruiter/create',                [RecruiterController::class, 'create'])->name('recruiter.create')->middleware('hasAdminPermission:recruiter_create');
+
+    Route::post('admin/recruiter/store',                [RecruiterController::class, 'store'])->name('recruiter.store')->middleware('hasAdminPermission:recruiter_create');
+
+    Route::get('admin/recruiter/edit/{id}',             [RecruiterController::class, 'edit'])->name('recruiter.edit')->middleware('hasAdminPermission:recruiter_edit');
+
+    Route::put('admin/recruiter/update/{id}', [RecruiterController::class, 'update'])->name('recruiter.update')->middleware('hasAdminPermission:recruiter_edit');
+
+    Route::delete('admin/recruiter/delete/{id}',         [RecruiterController::class, 'destroy'])->name('recruiter.delete')->middleware('hasAdminPermission:recruiter_delete');
 });

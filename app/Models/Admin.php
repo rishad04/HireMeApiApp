@@ -14,6 +14,7 @@ class Admin extends Authenticatable
         'name',
         'email',
         'password',
+        'is_recruiter',
     ];
 
     protected $hidden = [
@@ -24,5 +25,9 @@ class Admin extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

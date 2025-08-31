@@ -87,6 +87,13 @@
                 </a>
             </li>
        @endif
+       @if (hasAdminPermission('recruiter_view'))
+            <li class="menu-item">
+                <a href="{{route('recruiter.index')}}" class="menu-link">
+                    <div>Recruiter</div>
+                </a>
+            </li>
+       @endif
 
        <!-- Multi section starts  -->
 
