@@ -1,0 +1,352 @@
+/* Blinker */
+
+  .new-item-standalone-indicator {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 8px;
+  flex-shrink: 0;
+
+  /* Default Primary Color Variables */
+    --indicator-main-color: #007bff; /* A common primary blue */
+    --indicator-rgb-color: 0, 123, 255;
+  }
+
+  /* Error Color Variant */
+  .new-item-standalone-indicator.new-item-error {
+    --indicator-main-color: #dc3545; /* A common error red */
+    --indicator-rgb-color: 220, 53, 69;
+  }
+
+  /* Success Color Variant */
+  .new-item-standalone-indicator.new-item-success {
+    --indicator-main-color: #28a745; /* A common success green */
+    --indicator-rgb-color: 40, 167, 69;
+  }
+
+  /* Warning Color Variant */
+  .new-item-standalone-indicator.new-item-warning {
+    --indicator-main-color: #ffc107; /* A common warning yellow/orange */
+    --indicator-rgb-color: 255, 193, 7;
+  }
+
+  .new-item-standalone-indicator::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--indicator-main-color);
+    border-radius: 50%;
+    animation: blink-effect 1.2s infinite alternate;
+    margin-bottom: 6px;
+  }
+
+  .new-item-standalone-indicator::after {
+    content: attr(data-new-text);
+    color: var(--indicator-main-color);
+    font-size: 0.7em;
+    font-weight: bold;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  @keyframes blink-effect {
+    0% {
+      opacity: 0.3;
+      box-shadow: 0 0 0 rgba(var(--indicator-rgb-color), 0.7);
+    }
+    50% {
+      opacity: 1;
+      box-shadow: 0 0 5px rgba(var(--indicator-rgb-color), 0.9),
+                  0 0 10px rgba(var(--indicator-rgb-color), 0.6);
+    }
+    100% {
+      opacity: 0.3;
+      box-shadow: 0 0 0 rgba(var(--indicator-rgb-color), 0.7);
+    }
+  }
+
+  /* Blicker end */
+
+  
+/* ------------------ custom notification ---------------------------  */
+
+/* Notification Container */
+.notification-container {
+    position: relative; /* Crucial for positioning the notification-dropdown */
+    display: inline-block; /* Allows width to shrink to content */
+}
+
+/* Notification Icon (Bell) */
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+    color: #333; /* Default bell color (can be overridden by hover) */
+    padding: 10px; /* To make it clickable area larger */
+    border-radius: 50%; /* Still useful for consistent padding if needed */
+    transition: color 0.3s ease; /* Transition for color change */
+
+    /* NEW: Initial state - no background, just outline for the icon */
+    background-color: transparent; /* Ensure no background */
+}
+
+/* NEW: Hover, Focus, and Active states for the bell icon */
+.notification-icon:hover .bx-bell,
+.notification-icon:focus .bx-bell, /* For keyboard navigation/focus */
+.notification-icon.active .bx-bell, /* When notification-dropdown is open (via JS class) */
+.notification-icon .bx-bell.active-icon { /* Alternative if JS adds active to icon itself */
+    color: #000; /* Solid black fill */
+    font-weight: bold; /* Make it look bolder if needed for solid appearance */
+}
+
+
+/* Adjust the icon size specifically for Boxicons within .notification-icon */
+.notification-icon .bx { /* Targeting the Boxicon inside the bell icon wrapper */
+    font-size: 24px; /* Default size for bell */
+    vertical-align: middle; /* Helps align the icon properly */
+    /* NEW: Initial bell icon color (outline look) */
+    color: #333; /* Dark grey for initial outline appearance */
+    transition: color 0.3s ease, font-weight 0.3s ease; /* Smooth transition for color and weight */
+}
+
+
+/* Notification Counter */
+.notification-counter {
+    position: absolute;
+    top: 5px; /* Adjust as needed for vertical position */
+    right: 5px; /* Adjust as needed for horizontal position */
+    background-color: #ff4d4f; /* Red background */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%; /* Make it circular */
+    padding: 3px 6px; /* Adjust padding for size */
+    min-width: 15px; /* Ensure it's always a circle */
+    text-align: center;
+    line-height: 1.2; /* Center text vertically */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Subtle shadow */
+    display: flex; /* For perfect centering of number */
+    align-items: center;
+    justify-content: center;
+    transform: scale(1); /* Initial state for animation */
+    transition: transform 0.2s ease-out; /* For pop-out effect */
+}
+
+/* Hide counter when there are no notifications */
+.notification-counter.hidden {
+    display: none;
+}
+
+/* Notification Dropdown */
+.notification-notification-dropdown {
+    position: absolute;
+    top: calc(100% + 10px); /* Position below the icon, with some spacing */
+    right: 0; /* Align to the right of the container */
+    width: 350px; /* Fixed width for the notification-dropdown */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    z-index: 1000; /* Ensure it's above other content */
+    opacity: 0; /* Start hidden */
+    visibility: hidden; /* Start hidden */
+    transform: translateY(-10px); /* Initial state for animation */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    overflow: hidden; /* Important for border-radius on children */
+}
+
+.notification-notification-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+     transform: translateX(15%) translateY(1%); 
+
+     
+}
+
+/* Dropdown Header */
+.notification-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    background-color: #fcfcfc;
+}
+
+.notification-dropdown-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.notification-dropdown-header .mail-icon {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* Adjust the icon size specifically for Boxicons within .mail-icon */
+.notification-dropdown-header .mail-icon .bx { /* Targeting the Boxicon inside the mail icon wrapper */
+    font-size: 20px; /* Size for mail icon */
+    vertical-align: middle;
+}
+
+.notification-dropdown-header .mail-icon:hover {
+    color: #007bff; /* Example hover color */
+}
+
+/* Dropdown Body - Notification List */
+.notification-dropdown-body {
+    max-height: 400px; /* Max height before scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 0;
+    list-style: none; /* Remove default list styling if using ul/li */
+}
+
+/* Scrollbar styling for Webkit browsers */
+.notification-dropdown-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.notification-dropdown-body::-webkit-scrollbar-thumb {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+}
+
+.notification-dropdown-body::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Individual Notification Item */
+.notification-item {
+    display: flex;
+    align-items: flex-start; /* Align content to the top */
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    position: relative; /* For remove button positioning */
+}
+
+.notification-item:last-child {
+    border-bottom: none; /* No border for the last item */
+}
+
+.notification-item:hover {
+    background-color: #f7f7f7;
+}
+
+/* Notification Avatar */
+.notification-avatar {
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    background-color: #f0f0f0; /* Placeholder background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.notification-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.notification-avatar.initial-circle {
+    background-color: #e0f2f7; /* Light blue for initials */
+    color: #007bff;
+}
+
+/* Notification Content */
+.notification-content {
+    flex-grow: 1; /* Allow content to take available space */
+    color: #555;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.notification-content p {
+    margin: 0 0 5px 0;
+}
+
+.notification-content strong {
+    color: #333;
+}
+
+.notification-content .time-ago {
+    font-size: 12px;
+    color: #999;
+}
+
+/* For icons within content - now targeting Boxicons */
+.notification-content .bx {
+    margin-right: 5px;
+    color: #007bff;
+    font-size: 16px; /* Adjust size for inline icons */
+    vertical-align: middle; /* Helps align with text */
+}
+
+/* Remove Notification Button */
+.remove-notification {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px; /* Space between content and button */
+    transition: color 0.2s ease;
+    opacity: 0; /* Hidden by default */
+    position: absolute; /* Position relative to .notification-item */
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Adjust the icon size specifically for Boxicons within .remove-notification */
+.remove-notification .bx { /* Targeting the Boxicon inside the remove button */
+    font-size: 18px; /* Size for close icon */
+    vertical-align: middle;
+}
+
+.notification-item:hover .remove-notification {
+    opacity: 1; /* Show on hover of the notification item */
+    color: #888;
+}
+
+.remove-notification:hover {
+    color: #ff4d4f; /* Red on hover */
+}
+
+/* Dropdown Footer */
+.notification-dropdown-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    background-color: #fcfcfc;
+}
+
+.notification-dropdown-footer a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.notification-dropdown-footer a:hover {
+    color: #0056b3;
+}
+
+/* ------------------ custom notification-end ---------------------------  */

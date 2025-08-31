@@ -45,6 +45,8 @@ class RolePermissionSeeder extends Seeder
         return [
 
             // user = job seekers
+            'admin_dashboard_view',
+
             'user_view',
             'user_create',
             'user_edit',
