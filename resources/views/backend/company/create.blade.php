@@ -1,8 +1,8 @@
 {{-- Extends layout --}}
 @extends('backend.partials.master')
 
-@section('title')
-    {{ $page_title }}
+@section('name')
+    Create
 @endsection
 
 {{-- Content --}}
@@ -13,16 +13,8 @@
                 <div class="my-card__wrapper">
                     {{-- Card Header Start --}}
                     <div class=" my-table__header d-flex justify-content-between">
-                        <div class="my-table__title">
+                        <div class="my-table__name">
                             <h5>{{ $info->title }}</h5>
-                        </div>
-                        <div class="float-right">
-                            <a href="{{ route($info->first_button_route) }}" class="btn btn-primary">
-
-                                <i class="flaticon2-add"></i>
-
-                                {{ $info->first_button_title }}
-                            </a>
                         </div>
                     </div>
                     {{-- Card Header End --}}
@@ -31,116 +23,39 @@
                     <div class="my-card__body">
                         <form class="form" action="{{ route($info->form_route) }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="row g-4">
-
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-
-                                        <label class="form-label" for="banner">Banner
-                                        </label>
-                                        <div class="admin__thumb-upload">
-                                            <div class=" admin__thumb-edit">
-                                                <input type='file' class="@error('banner') is-invalid @enderror" id="banner"
-                                                    name="banner" onchange="imagePreview(this,'image_preview_banner');"
-                                                    accept=".png, .jpg, .jpeg" />
-                                                <label for="banner"></label>
-                                            </div>
-
-                                            <div class="admin__thumb-preview">
-                                                <div id="image_preview_banner" class="admin__thumb-profilepreview"
-                                                    style="background-image: url( {{ asset(avatarUrl()) }});">
-                                                </div>
-                                            </div>
-
-                                            @error('banner')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="title">Title </label>
-                                        <input type="text" value="{{ old('title') }}"
-                                            class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                                            placeholder="Enter Title">
-                                        @error('title')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="form-container">
+                                <div class="form-row">
+                                    <label for="name" class="form-label">Name:</label>
+                                    <div class="form-input-wrapper">
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            id="name"
+                                            required
+                                            class="form-input @error('name') input-error @enderror"
+                                            value="{{ old('name') }}"
+                                        >
+                                        @error('name')
+                                            <div class="error-text">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="slug">Slug </label>
-                                        <input type="text" value="{{ old('slug') }}"
-                                            class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
-                                            placeholder="Enter Slug">
+                                <div class="form-row">
+                                    <label for="slug" class="form-label">Slug:</label>
+                                    <div class="form-input-wrapper">
+                                        <input
+                                            type="text"
+                                            name="slug"
+                                            id="slug"
+                                            required
+                                            class="form-input @error('slug') input-error @enderror"
+                                            value="{{ old('slug') }}"
+                                        >
                                         @error('slug')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="error-text">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="price">Price </label>
-                                        <input type="number" value="{{ old('price') }}"
-                                            class="form-control @error('price') is-invalid @enderror" id="price" name="price"
-                                            placeholder="Enter Price">
-                                        @error('price')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input @error('is_popular') is-invalid @enderror" type="checkbox"
-                                                name="is_popular" id="is_popular" @if (old('is_popular') == 1) checked @endif>
-                                            <label class="form-check-label" for="is_popular">Is Popular </label>
-                                            @error('is_popular')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        <label class="form-label" for="billing_cycle">Billing Cycle </label>
-                                        <select class="form-select search-select @error('billing_cycle') is-invalid @enderror"
-                                            data-live-search="true" id="billing_cycle" name="billing_cycle">
-                                            <option value="">--Choose--</option>
-
-                                            <option value="weekly" @if (old('billing_cycle') == 'weekly') selected @endif>Weekly</option>
-
-                                            <option value="monthly" @if (old('billing_cycle') == 'monthly') selected @endif>Mothly</option>
-
-                                            <option value="yearly" @if (old('billing_cycle') == 'yearly') selected @endif>Yearly</option>
-                                        </select>
-                                        @error('billing_cycle')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                </div>
-                                <div class="col-md-12">
-
-                                    <div class="form-group">
-
-                                        <label class="form-label" for="description">Description </label>
-                                        {!! renderCKEditorHtml('description', 0, old('description')) !!} @error('description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-lg-10">
@@ -159,10 +74,11 @@
 
 @section('css')
     @parent
+
+
 @endsection
 
 @section('js')
     @parent
 
-    {!! renderCKEditorScript('description') !!}
 @endsection

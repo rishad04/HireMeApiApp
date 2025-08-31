@@ -70,13 +70,22 @@
          </a>
        </li>
        @if (hasAdminPermission('user_view'))
-        <li class="menu-item">
-            <a href="{{route('users.index')}}" class="menu-link">
+            <li class="menu-item">
+                <a href="{{route('users.index')}}" class="menu-link">
 
 
-            <div > Users</div>
-            </a>
-        </li>
+                <div > Users</div>
+                </a>
+            </li>
+       @endif
+       @if (hasAdminPermission('company_view'))
+            <li class="menu-item">
+                <a href="{{route('company.index')}}" class="menu-link">
+
+
+                <div > Company</div>
+                </a>
+            </li>
        @endif
 
        <!-- Multi section starts  -->

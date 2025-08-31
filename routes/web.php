@@ -2,10 +2,12 @@
 
 use App\Models\Role;
 use App\Models\User;
+use Faker\Provider\el_CY\Company;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 
 /*
@@ -54,16 +56,29 @@ Route::group(['middleware' => ['auth', 'hasPermission:admin_test']], function ()
 });
 Route::group(['middleware' => ['auth:admin']], function () {
 
+    // Users
     Route::get('admin/users',                       [UserController::class, 'index'])->name('users.index')->middleware('hasAdminPermission:user_view');
 
     Route::get('admin/users/create',                [UserController::class, 'create'])->name('users.create')->middleware('hasAdminPermission:user_create');
+
     Route::post('admin/users/store',                [UserController::class, 'store'])->name('users.store')->middleware('hasAdminPermission:user_create');
+
     Route::get('admin/users/edit/{id}',             [UserController::class, 'edit'])->name('users.edit')->middleware('hasAdminPermission:user_edit');
+
     Route::put('admin/users/update/{id}', [UserController::class, 'update'])->name('users.update')->middleware('hasAdminPermission:user_edit');
 
     Route::delete('admin/user/delete/{id}',         [UserController::class, 'destroy'])->name('users.delete')->middleware('hasAdminPermission:user_delete');
 
+    // company
+    Route::get('admin/company',                       [CompanyController::class, 'index'])->name('company.index')->middleware('hasAdminPermission:company_view');
 
-    // Route::get('users', [UserController::class, 'index'])->name('user.index')->middleware('hasAdminPermission:user_view');
-    // Route::post('users', [UserController::class, 'index'])->name('user.index')->middleware('hasAdminPermission:user_view');
+    Route::get('admin/company/create',                [CompanyController::class, 'create'])->name('company.create')->middleware('hasAdminPermission:company_create');
+
+    Route::post('admin/company/store',                [CompanyController::class, 'store'])->name('company.store')->middleware('hasAdminPermission:company_create');
+
+    Route::get('admin/company/edit/{id}',             [CompanyController::class, 'edit'])->name('company.edit')->middleware('hasAdminPermission:company_edit');
+
+    Route::put('admin/company/update/{id}', [CompanyController::class, 'update'])->name('company.update')->middleware('hasAdminPermission:company_edit');
+
+    Route::delete('admin/company/delete/{id}',         [CompanyController::class, 'destroy'])->name('company.delete')->middleware('hasAdminPermission:company_delete');
 });

@@ -151,7 +151,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     toast: true,
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: @json(session('success')),
                     showConfirmButton: false,
@@ -167,7 +167,7 @@
         <script>
             Swal.fire({
                 toast: true,
-                position: 'top-end',
+                position: 'center',
                 icon: 'error',
                 title: @json(session('error')),
                 showConfirmButton: false,
@@ -181,7 +181,7 @@
         <script>
             Swal.fire({
                 toast: true,
-                position: 'top-end',
+                position: 'center',
                 icon: 'warning',
                 title: @json(session('warning')),
                 showConfirmButton: false,
