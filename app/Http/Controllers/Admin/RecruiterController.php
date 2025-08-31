@@ -22,7 +22,15 @@ class RecruiterController extends Controller
         $info->first_button_title = 'Create';
         $info->first_button_route = 'recruiter.create';
 
-        $data = Admin::where('is_recruiter', 1)->where('role_id', 2)->orderBy('id', 'desc')->paginate(10);
+        $auth_admin = auth()->guard('admin')->user();
+
+        if ($auth_admin->role?->slug == 'admin') {
+            $data = Admin::where('is_recruiter', 1)->where('role_id', 2)->orderBy('id', 'desc')->paginate(10);
+        } else {
+            $data = Admin::where('id', $auth_admin->id)->where('is_recruiter', 1)->where('role_id', 2)->orderBy('id', 'desc')->paginate(10);
+        }
+
+
 
         // dd($data);
         return view('backend.recruiter.index', compact('data', 'info'));

@@ -88,9 +88,7 @@ class RolePermissionSeeder extends Seeder
             'company_edit',
 
             'recruiter_view',
-            'recruiter_create',
             'recruiter_edit',
-            'recruiter_delete',
 
             'job_view',
             'job_create',

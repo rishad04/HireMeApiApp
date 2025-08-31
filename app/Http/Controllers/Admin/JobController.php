@@ -23,7 +23,13 @@ class JobController extends Controller
         $info->first_button_title = 'Create';
         $info->first_button_route = 'job.create';
 
-        $data = Job::with('company')->orderBy('id', 'desc')->paginate(10);
+        $auth_admin = auth()->guard('admin')->user();
+
+        if ($auth_admin->role?->slug == 'admin') {
+            $data = Job::with('company')->orderBy('id', 'desc')->paginate(10);
+        } else {
+            $data = Job::with('company')->where('company_id', $auth_admin->company_id)->orderBy('id', 'desc')->paginate(10);
+        }
 
         return view('backend.job.index', compact('data', 'info'));
     }
@@ -109,7 +115,7 @@ class JobController extends Controller
 
 
         $request->validate([
-                'title' => 'required',
+            'title' => 'required',
             'company' => 'required',
             'type' => 'required',
             'location' => 'required',

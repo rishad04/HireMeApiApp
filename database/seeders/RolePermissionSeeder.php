@@ -82,16 +82,12 @@ class RolePermissionSeeder extends Seeder
     {
         return [
 
-            'recruiter_test',
-
             'company_view',
             'company_create',
             'company_edit',
 
             'recruiter_view',
-            'recruiter_create',
             'recruiter_edit',
-            'recruiter_delete',
 
             'job_view',
             'job_create',
