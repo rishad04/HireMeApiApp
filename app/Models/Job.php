@@ -24,4 +24,9 @@ class Job extends Model
     {
         return $this->userApplication()->where('user_id', $user_id);
     }
+
+    public function createdByAdmin()
+    {
+        return $this->belongsTo(Admin::class, 'created_by_admin_id', 'id');
+    }
 }

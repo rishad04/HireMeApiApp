@@ -5,6 +5,7 @@ use App\Models\User;
 use Faker\Provider\el_CY\Company;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CompanyController;
@@ -95,4 +96,18 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::put('admin/recruiter/update/{id}', [RecruiterController::class, 'update'])->name('recruiter.update')->middleware('hasAdminPermission:recruiter_edit');
 
     Route::delete('admin/recruiter/delete/{id}',         [RecruiterController::class, 'destroy'])->name('recruiter.delete')->middleware('hasAdminPermission:recruiter_delete');
+
+
+    // job
+    Route::get('admin/job', [JobController::class, 'index'])->name('job.index')->middleware('hasAdminPermission:job_view');
+
+    Route::get('admin/job/create',                [JobController::class, 'create'])->name('job.create')->middleware('hasAdminPermission:job_create');
+
+    Route::post('admin/job/store',                [JobController::class, 'store'])->name('job.store')->middleware('hasAdminPermission:job_create');
+
+    Route::get('admin/job/edit/{id}',             [JobController::class, 'edit'])->name('job.edit')->middleware('hasAdminPermission:job_edit');
+
+    Route::put('admin/job/update/{id}', [JobController::class, 'update'])->name('job.update')->middleware('hasAdminPermission:job_edit');
+
+    Route::delete('admin/job/delete/{id}',         [JobController::class, 'destroy'])->name('job.delete')->middleware('hasAdminPermission:job_delete');
 });
