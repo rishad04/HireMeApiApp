@@ -17,7 +17,7 @@
 
 
 
-   <title>@yield('title', 'MyCoder V1.1')</title>
+   <title>@yield('title', 'Hire me')</title>
 
   <meta name="description" content="" />
 
