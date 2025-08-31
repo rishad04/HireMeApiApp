@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\RecruiterController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,4 +111,22 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::put('admin/job/update/{id}', [JobController::class, 'update'])->name('job.update')->middleware('hasAdminPermission:job_edit');
 
     Route::delete('admin/job/delete/{id}',         [JobController::class, 'destroy'])->name('job.delete')->middleware('hasAdminPermission:job_delete');
+
+    // application
+    Route::get('admin/application', [ApplicationController::class, 'index'])->name('application.index')->middleware('hasAdminPermission:application_view');
+
+    Route::get('admin/application/create',                [ApplicationController::class, 'create'])->name('application.create')->middleware('hasAdminPermission:application_create');
+
+    Route::post('admin/application/store',                [ApplicationController::class, 'store'])->name('application.store')->middleware('hasAdminPermission:application_create');
+
+    Route::get('admin/application/edit/{id}',             [ApplicationController::class, 'edit'])->name('application.edit')->middleware('hasAdminPermission:application_edit');
+
+    Route::put('admin/application/update/{id}', [ApplicationController::class, 'update'])->name('application.update')->middleware('hasAdminPermission:application_edit');
+
+    Route::delete('admin/application/delete/{id}',         [ApplicationController::class, 'destroy'])->name('application.delete')->middleware('hasAdminPermission:application_delete');
+
+    //accept
+    Route::post('admin/application/accept/{id}',                [ApplicationController::class, 'accept'])->name('application.accept')->middleware('hasAdminPermission:application_edit');
+    //reject
+    Route::post('admin/application/reject/{id}',                [ApplicationController::class, 'reject'])->name('application.reject')->middleware('hasAdminPermission:application_edit');
 });

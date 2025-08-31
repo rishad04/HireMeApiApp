@@ -95,6 +95,7 @@ class RolePermissionSeeder extends Seeder
             'job_delete',
 
             'application_view',
+            'application_edit',
 
             'payment_view',
         ];

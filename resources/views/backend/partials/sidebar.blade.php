@@ -89,11 +89,18 @@
            </li>
            @endif
            @if (hasAdminPermission('job_view'))
-            <li class="menu-item {{ request()->is('admin/job*') ? 'active' : '' }}">
-               <a href="{{route('job.index')}}" class="menu-link">
-                   <div>Job Manage</div>
-               </a>
-           </li>
+                <li class="menu-item {{ request()->is('admin/job*') ? 'active' : '' }}">
+                <a href="{{route('job.index')}}" class="menu-link">
+                    <div>Job Manage</div>
+                </a>
+            </li>
+           @endif
+           @if (hasAdminPermission('application_view'))
+                <li class="menu-item {{ request()->is('admin/application*') ? 'active' : '' }}">
+                <a href="{{route('application.index')}}" class="menu-link">
+                    <div>Application Manage</div>
+                </a>
+            </li>
            @endif
 
            <!-- Multi section starts  -->
