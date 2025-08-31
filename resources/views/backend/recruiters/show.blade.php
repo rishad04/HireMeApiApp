@@ -7,9 +7,9 @@
 @section('container')
     <div class="row">
         <div class="col-lg-12">
-            <div class="trk-card">
-                <div class="trk-card__header d-flex justify-content-between">
-                    <div class="trk-card__title">
+            <div class="my-card">
+                <div class="my-card__header d-flex justify-content-between">
+                    <div class="my-card__title">
                         <h5>{{ $info->title }}</h5>
                     </div>
                     <div class="float-right">
@@ -25,14 +25,14 @@
                         </a>
                     </div>
                 </div>
-                <div class="trk-card__body">
-                    <div class="trk-card__body-text">
+                <div class="my-card__body">
+                    <div class="my-card__body-text">
                         <ul class="crud-view mt-4">
                             <li class="crud-view__item">
                                 <span class="crud-view__item-title">Banner:</span>
                                 <span class="crud-view__item-content">
-                                    <div class="trk-avatar d-flex flex-wrap align-items-center">
-                                        <div class="trk-avatar__item me-3">
+                                    <div class="my-avatar d-flex flex-wrap align-items-center">
+                                        <div class="my-avatar__item me-3">
 
                                             <img style="height:100px;"
                                                 @if ($data->banner) src="{{ asset($data->banner) }}"

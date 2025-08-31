@@ -39,6 +39,45 @@ class LoginController extends Controller
                 ->withInput($request->only('email', 'remember'));
         }
     }
+    public function adminDemoLogin(Request $request)
+    {
+
+        $request->merge(['email' => 'admin@hireme.com', 'password' => '112233']);
+
+        // dd($request->all());
+        // Validate the form data
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        // Attempt to log the user in
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            return redirect()->route('admin-dashboard');
+        } else {
+            return redirect()->back()
+                ->withErrors(['email' => __('auth.failed')])
+                ->withInput($request->only('email', 'remember'));
+        }
+    }
+    public function recruiterDemoLogin(Request $request)
+    {
+        $request->merge(['email' => 'recruiter@hireme.com', 'password' => '112233']);
+        // Validate the form data
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        // Attempt to log the user in
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            return redirect()->route('admin-dashboard');
+        } else {
+            return redirect()->back()
+                ->withErrors(['email' => __('auth.failed')])
+                ->withInput($request->only('email', 'remember'));
+        }
+    }
 
     public function logout(Request $request)
     {

@@ -17,41 +17,49 @@
 
 
 
-   <title>@yield('title', 'MyCoder V1.1')</title>
+   <title>@yield('title', 'Hire Me')</title>
 
-  <meta name="description" content="" />
+<meta name="description" content="" />
 
-      <link rel="stylesheet" href="{{ asset('backend/assets/vendor/fonts/Lexend/lexend-fonts.css') }}" />
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/fonts/Lexend/lexend-fonts.css') }}" />
 
-    <!-- Tom Select CSS -->
-    <link href="{{ asset('backend/assets/vendor/tomselect/css/tom-select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
+<!-- Tom Select CSS -->
+{{-- <link href="{{ asset('backend/assets/vendor/tomselect/css/tom-select.bootstrap5.min.css') }}" rel="stylesheet" type="text/css"> --}}
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 
-        {{-- sweetalert --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css">
+<!-- Icons. Uncomment required icon fonts -->
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/fonts/boxicons.css')}}" />
 
-  <!-- Icons. Uncomment required icon fonts -->
-  <link rel="stylesheet" href="{{ asset('backend/assets/vendor/fonts/boxicons.css')}}" />
+{{-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> --}}
 
-  {{-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> --}}
+{{-- <link rel="stylesheet" href="../../assets/vendor/fonts/iconify-icons.css" /> --}}
 
+<!-- Core CSS -->
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
+<link rel="stylesheet" href="{{ asset('backend/assets/css/demo.css') }}" />
 
-  {{-- <link rel="stylesheet" href="../../assets/vendor/fonts/iconify-icons.css" /> --}}
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
 
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="{{ asset('backend/assets/css/demo.css') }}"/>
+<!-- Tom Font awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- Vendors CSS -->
-  <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+<!-- Move SweetAlert2 CSS to be last -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" />
 
+<style>
+    /* Custom SweetAlert2 toast styles override */
+    /* .swal2-toast .swal2-title {
+        color: #333 !important;
+        font-size: 1rem !important;
+        font-weight: 500;
+    } */
+</style>
 
-    <!-- Tom Font awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+@yield('css')
 
-    @yield('css')
   <!-- Page CSS -->
 
   <!-- Helpers -->
@@ -124,43 +132,71 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
         <!-- tomselect -->
-        <script src="{{ asset('backend/assets/vendor/tomselect/js/tom-select.complete.min.js') }}"></script>
-
-        <!-- SweetAlert2 CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+        {{-- <script src="{{ asset('backend/assets/vendor/tomselect/js/tom-select.complete.min.js') }}"></script> --}}
 
         <!-- Main JS -->
         <script src="{{ asset('backend/assets/js/main.js')}}"></script>
-         <script src="{{ asset('backend/assets/js/dev_custom.js') }}"></script>
+         {{-- <script src="{{ asset('backend/assets/js/dev_custom.js') }}"></script> --}}
         <!-- Page JS -->
 
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
 
+          <!-- SweetAlert2 CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+
         @if (session('success'))
-            <script>
-                SwalNotification('Success', "{{ session('success') }}", 'success');
-            </script>
-        @endif
+        <script>console.log("Session Success Message:", @json(session('success')));
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: @json(session('success')),
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            });
+        </script>
+@endif
 
-        @if (session('error'))
-            <script>
-                SwalNotification('Error', "{{ session('error') }}", 'error');
-            </script>
-        @endif
 
-        @if (session('warning'))
-            <script>
-                SwalNotification('Warning', "{{ session('warning') }}", 'warning');
-            </script>
-        @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: @json(session('error')),
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        </script>
+    @endif
+
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'warning',
+                title: @json(session('warning')),
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        </script>
+    @endif
+
 
 
 
         {{-- Image Upload view --}}
 
-         <script>
+    <script>
         const selectedFilesMap = {};
 
         function handleFileSelect(event, inputId, previewContainerId, isMultiple = true) {

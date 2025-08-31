@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use stdClass;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -48,13 +49,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|min:6',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role_id' => 3,
+            'role_id' => Role::where('slug', 'job-seeker')->value('id'),
             'password' => Hash::make($request->password),
         ]);
 
@@ -78,10 +79,11 @@ class UserController extends Controller
         $info->first_button_title = 'Users';
         $info->first_button_route = 'users.create';
         $info->route_index = 'users.index';
+        $info->form_route = 'users.update';
         $info->description = 'These all are users';
 
         $data = User::find($id);
-        return view('users.edit', compact('data', 'info'));
+        return view('backend.users.edit', compact('data', 'info'));
     }
 
     /**
@@ -95,7 +97,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8',
+            'password' => 'nullable|min:6',
         ]);
 
         $user->update([
@@ -110,15 +112,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
-        $page_title = 'Users';
-        $info = new stdClass();
-        $info->title = 'Users';
-        $info->first_button_title = 'Users';
-        $info->first_button_route = 'users.create';
-        $info->route_index = 'users.index';
-        $info->description = 'These all are users';
+
+        User::find($id)->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

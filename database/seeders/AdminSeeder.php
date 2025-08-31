@@ -18,16 +18,15 @@ class AdminSeeder extends Seeder
 
             [
                 'id' => 1,
-                'name' => 'Super Admin',
-                'email' => 'superadmin@hireme.com',
+                'name' => 'Admin',
+                'email' => 'admin@hireme.com',
                 'role_id' => 1,
                 'password' => '112233',
             ],
             [
                 'id' => 2,
                 'name' => 'Recruiter',
-                'avatar' => 'assets/images/avatar/2.jpg',
-                'email' => 'hire@hireme.com',
+                'email' => 'recruiter@hireme.com',
                 'role_id' => 2,
                 'password' => '112233',
             ],
@@ -35,8 +34,14 @@ class AdminSeeder extends Seeder
             [
                 'id' => 3,
                 'name' => 'Recruiter 2',
-                'avatar' => 'assets/images/avatar/3.jpg',
-                'email' => 'hire2@hireme.com',
+                'email' => 'recruiter2@hireme.com',
+                'role_id' => 2,
+                'password' => '112233',
+            ],
+            [
+                'id' => 4,
+                'name' => 'Recruiter 3',
+                'email' => 'recruiter3@hireme.com',
                 'role_id' => 2,
                 'password' => '112233',
             ],

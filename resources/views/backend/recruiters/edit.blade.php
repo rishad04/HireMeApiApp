@@ -9,11 +9,11 @@
 @section('container')
     <div class="row">
         <div class="col-lg-12">
-            <div class="trk-card">
-                <div class="trk-card__wrapper">
+            <div class="my-card">
+                <div class="my-card__wrapper">
                     {{-- Card Header Start --}}
-                    <div class=" trk-table__header d-flex justify-content-between">
-                        <div class="trk-table__title">
+                    <div class=" my-table__header d-flex justify-content-between">
+                        <div class="my-table__title">
                             <h5>{{ $info->title }}</h5>
                         </div>
                         <div class="float-right">
@@ -34,7 +34,7 @@
                     {{-- Card Header End --}}
 
                     {{-- Card Body Start --}}
-                    <div class="trk-card__body">
+                    <div class="my-card__body">
                         <form class="form" action="{{ route($info->form_route, $id) }}" method="post" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
@@ -152,8 +152,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-10">
-                                    <button type="submit" class="btn btn-primary mt-4">{{ __('button.update') }}</button>
-                                    <button type="reset" class="btn btn-danger mt-4">{{ __('button.reset') }}</button>
+                                    <button type="submit" class="btn btn-primary mt-4">{{ __('update') }}</button>
+                                    <button type="reset" class="btn btn-danger mt-4">{{ __('reset') }}</button>
                                 </div>
                             </div>
                         </form>
