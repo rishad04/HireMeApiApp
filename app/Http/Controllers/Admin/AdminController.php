@@ -13,9 +13,10 @@ class AdminController extends Controller
     public function index()
     {
 
+        $data = [];
+
         if (auth()->guard('admin')->user()->role->slug == 'admin') {
 
-            $data = [];
 
             $data['total_company'] = Company::count();
             $data['total_job'] = Job::count();
@@ -25,7 +26,13 @@ class AdminController extends Controller
 
             return view('backend.admin-dashboard', compact('data'));
         } elseif (auth()->guard('admin')->user()->role->slug == 'recruiter') {
-            return view('backend.recruiter-dashboard');
+
+            $data['total_job'] = Job::where('company_id', auth()->guard('admin')->user()->company_id)->count();
+            $data['total_applicant'] = UserApplication::whereHas('job.company', function ($query) {
+                $query->where('id', auth()->guard('admin')->user()->company_id);
+            })->count();
+
+            return view('backend.recruiter-dashboard', compact('data'));
         } else {
             return 403;
         }
