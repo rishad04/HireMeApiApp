@@ -13,6 +13,7 @@ class UserApplication extends Model
         'paid',
         'payment_status',
         'status',
+        'resume',
     ];
 
     public function job()

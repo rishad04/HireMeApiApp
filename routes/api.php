@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use PharIo\Manifest\AuthorCollection;
 use App\Http\Controllers\Api\JobController;
-use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\UserDashboardController;
 
 /*
@@ -47,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/payment-intend', [PaymentController::class, 'intend']);
     Route::get('/user-applications', [UserDashboardController::class, 'index']);
     Route::delete('/user-application/delete/{application}', [UserDashboardController::class, 'destroy']);
+    Route::post('/applications/upload-cv', [ApplicationController::class, 'uploadCv']);
 });
 
 // Stripe success/cancel callbacks

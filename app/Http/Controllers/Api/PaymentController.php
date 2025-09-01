@@ -83,8 +83,9 @@ class PaymentController extends Controller
 
         Log::info('Payment success in stripe', [$request->all()]);
 
-        return redirect(env('FRONTEND_URL'));
-        // return view('payment.success', compact('application'));
+        $redirect_url = env('FRONTEND_URL') . '/payment-success/upload-cv?application_id=' . $user_application->id;
+
+        return redirect($redirect_url);
     }
 
     public function stripeCancel(Request $request)

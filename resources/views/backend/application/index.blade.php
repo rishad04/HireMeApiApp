@@ -30,6 +30,7 @@ application
                                 <th>company</th>
                                 <th>Job</th>
                                 <th>Status</th>
+                                <th>Resume</th>
                                 <th>payment</th>
                                 <th>Action</th>
                             </tr>
@@ -43,6 +44,15 @@ application
                                 <td>{{ $row->job?->company?->name }}</td>
                                 <td>{{ $row->job?->title }}</td>
                                 <td>{{ $row->status }}</td>
+                                <td>
+                                    @if($row->resume)
+                                        <a href="{{ asset('storage/' . $row->resume) }}" class="btn-table" download>
+                                            Download CV
+                                        </a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                                 <td>{{ $row->payment_status }}</td>
                                 <td class="text-nowrap">
 
