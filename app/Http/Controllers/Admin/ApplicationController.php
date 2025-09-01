@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use stdClass;
 use App\Models\Job;
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Models\UserApplication;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Models\UserApplication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +19,7 @@ class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $info = new stdClass();
         $info->first_button_title = 'Create';
@@ -26,19 +27,44 @@ class ApplicationController extends Controller
 
         $auth_admin = auth()->guard('admin')->user();
 
-        // dd($auth_admin->role->permissions);
+        $jobs = Job::all();
+        $users = User::all();
+        $companies = Company::all();
 
+        $data = UserApplication::query();
+
+        // Handle role-based filtering
         if ($auth_admin->role?->slug == 'admin') {
-            $data = UserApplication::with('job.company')->orderBy('id', 'desc')->paginate(10);
+            $data = $data->with('job.company');
         } else {
-            $data = UserApplication::whereHas('job.company', function ($query) use ($auth_admin) {
+            $data = $data->whereHas('job.company', function ($query) use ($auth_admin) {
                 $query->where('id', $auth_admin->company_id);
-            })
-                ->where('payment_status', 'paid')
-                ->orderBy('id', 'desc')->paginate(10);
+            })->where('payment_status', 'paid');
         }
 
-        return view('backend.application.index', compact('data', 'info'));
+        // Apply filter conditions
+        if ($request->filled('user')) {
+            $data = $data->where('user_id', $request->user);
+        }
+
+        if ($request->filled('job')) {
+            $data = $data->where('job_id', $request->job);
+        }
+
+        if ($request->filled('status')) {
+            $data = $data->where('status', $request->status);
+        }
+
+        if ($request->filled('company')) {
+            $data = $data->whereHas('job.company', function ($query) use ($request) {
+                $query->where('id', $request->company);
+            });
+        }
+
+        // Now paginate the results after applying all filters
+        $data = $data->orderBy('id', 'desc')->paginate(10); // Apply pagination after query modifications
+
+        return view('backend.application.index', compact('data', 'info', 'jobs', 'users', 'companies'));
     }
 
     /**

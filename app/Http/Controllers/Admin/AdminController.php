@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Job;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Models\UserApplication;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
@@ -11,7 +14,16 @@ class AdminController extends Controller
     {
 
         if (auth()->guard('admin')->user()->role->slug == 'admin') {
-            return view('backend.admin-dashboard');
+
+            $data = [];
+
+            $data['total_company'] = Company::count();
+            $data['total_job'] = Job::count();
+            $data['total_applicant'] = UserApplication::count();
+            $data['total_income'] = UserApplication::sum('paid');
+
+
+            return view('backend.admin-dashboard', compact('data'));
         } elseif (auth()->guard('admin')->user()->role->slug == 'recruiter') {
             return view('backend.recruiter-dashboard');
         } else {

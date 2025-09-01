@@ -292,6 +292,43 @@
         }
     </script>
 
+    <script>
+        function filterOnEnter(event,filterItems) {
+
+            console.log('here');
+            console.log(filterItems);
+
+            event.preventDefault();
+            var url = new URL(window.location.href);
+            
+            filterItems.forEach(filterItem => {
+            url.searchParams.set(filterItem.param, $('#' + filterItem.input_id).val());
+            });
+
+            window.location.href = url.href;
+            $('#clearButton').show();
+        }
+
+        // Function to clear filters and reset the URL
+        function clearFilters(event) {
+
+            event.preventDefault();
+            var url = new URL(window.location.href);
+            
+            // Reset the search params (remove filters)
+            filterItems.forEach(filterItem => {
+                url.searchParams.delete(filterItem.param);
+            });
+
+            window.location.href = url.href;
+            // $('#clearButton').show();
+        
+        }
+    </script>
+
+    {{-- charts  --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 
         @yield('js')

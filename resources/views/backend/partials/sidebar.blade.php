@@ -62,26 +62,26 @@
 
        <ul class="menu-inner py-1">
            <!-- Dashboard -->
-            <li class="menu-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
+            <li class="menu-item {{ request()->is('dashboard*') ? 'active' : '' }}">
                <a href="{{route('admin-dashboard')}}" class="menu-link">
                 <div> Dashboard</div>
                </a>
            </li>
-           @if (hasAdminPermission('user_view'))
+           @if ( auth()->guard('admin')->user()->role?->slug == 'admin' &&  hasAdminPermission('user_view'))
             <li class="menu-item {{ request()->is('admin/users*') ? 'active' : '' }}">
                <a href="{{route('users.index')}}" class="menu-link">
                 <div> Users</div>
                </a>
            </li>
            @endif
-           @if (hasAdminPermission('company_view'))
+           @if (auth()->guard('admin')->user()->role?->slug == 'admin' && hasAdminPermission('company_view'))
             <li class="menu-item {{ request()->is('admin/company*') ? 'active' : '' }}">
                <a href="{{route('company.index')}}" class="menu-link">
                    <div> Company</div>
                </a>
            </li>
            @endif
-           @if (hasAdminPermission('recruiter_view'))
+           @if (auth()->guard('admin')->user()->role?->slug == 'admin' && hasAdminPermission('recruiter_view'))
             <li class="menu-item {{ request()->is('admin/recruiter*') ? 'active' : '' }}">
                <a href="{{route('recruiter.index')}}" class="menu-link">
                    <div>Recruiter</div>

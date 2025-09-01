@@ -19,6 +19,90 @@ application
                 @endif --}}
             </div>
 
+             <div class="card-body pb-0">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label" for="user">User</label>
+                            <select class="form-select custom-select search-select" id="user" name="user" data-live-search="true">
+                                <option value="">--Choose--</option>
+                                @foreach ($users as $user)
+                                <option value="{{ $user->id }}" @selected(request('user')==$user->id)>
+                                    {{ $user->name }}
+                                </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+
+                    @if (auth()->guard('admin')->user()->role?->slug == 'admin')
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label" for="company">Company</label>
+                                <select class="form-select custom-select search-select" id="company" name="company" data-live-search="true">
+                                    <option value="">--Choose--</option>
+                                    @foreach ($companies as $company)
+                                    <option value="{{ $company->id }}" @selected(request('company')==$company->id)>
+                                        {{ $company->name }}
+                                    </option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if (auth()->guard('admin')->user()->role?->slug == 'admin')
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label" for="job">Jobs</label>
+                                <select class="form-select custom-select search-select" id="job" name="job" data-live-search="true">
+                                    <option value="">--Choose--</option>
+                                    @foreach ($jobs as $job)
+                                    <option value="{{ $job->id }}" @selected(request('job')==$job->id)>
+                                        {{ $job->title }}
+                                    </option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="col-md-3 mb-2">
+                        <div class="form-group">
+                            <label class="form-label" for="status">Status</label>
+                            <select class="form-select white-dropdown custom-select search-select" name="status" id="status">
+                                <option value="">--Choose--</option>
+                                @foreach (applicationStatus() as $status => $item)
+                                <option value="{{ $status }}" @selected(request('status')==$status)>
+                                    {{ $item }}
+                                </option>
+                                @endforeach
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="button" class="btn rounded-pill btn-dark" onclick="filterOnEnter(event, filterItems)">Filter</button>
+
+                        <!-- Cross Button to Clear Filters -->
+                        <button id="clearButton" type="button" class="btn rounded-pill btn-icon btn-danger {{ request()->query() ? '' : 'd-none' }}" onclick="clearFilters(event)">
+                            <span class="fas fa-times"></span>
+                        </button>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+           
+
             <div class="card-body">
                 <div class="table-responsive text-nowrap mb-3">
 
@@ -137,7 +221,34 @@ application
 @section('js')
 @parent
 {{-- SCRIPT --}}
+<script>
+    const filterItems = [
+        //
+        {
+            param: 'user',
+            input_id: 'user',
+            type: ''
+        },
+        {
+            param: 'company',
+            input_id: 'company',
+            type: ''
+        },
+        {
+            param: 'job',
+            input_id: 'job',
+            type: ''
+        },
+        {
+            param: 'status',
+            input_id: 'status',
+            type: ''
+        },
+  
 
+        // Add more items as needed
+    ];
+</script>
 
 </script>
 
