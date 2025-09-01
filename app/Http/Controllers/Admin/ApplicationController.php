@@ -33,7 +33,9 @@ class ApplicationController extends Controller
         } else {
             $data = UserApplication::whereHas('job.company', function ($query) use ($auth_admin) {
                 $query->where('id', $auth_admin->company_id);
-            })->orderBy('id', 'desc')->paginate(10);
+            })
+                ->where('payment_status', 'paid')
+                ->orderBy('id', 'desc')->paginate(10);
         }
 
         return view('backend.application.index', compact('data', 'info'));
